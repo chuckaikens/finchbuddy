@@ -15,7 +15,7 @@ export default async function PrivacyPolicyPage() {
   return (
     <>
       <Header categories={categories} />
-      <main className="pt-[120px] min-h-screen">
+      <main className="pt-[70px] md:pt-[120px] min-h-screen">
         <div className="max-w-screen-2xl mx-auto px-8 md:px-24 mt-16">
           <h1 className="font-headline text-5xl font-black tracking-tighter leading-none text-on-surface mb-12">
             Privacy Policy

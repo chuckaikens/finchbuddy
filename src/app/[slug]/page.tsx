@@ -80,7 +80,7 @@ export default async function SlugPage({
     return (
       <>
         <Header categories={categories} />
-        <main className="pt-[120px] min-h-screen">
+        <main className="pt-[70px] md:pt-[120px] min-h-screen">
           <section className="max-w-screen-2xl mx-auto px-8 md:px-24 pt-16 pb-8">
             <span className="bg-primary-container text-on-primary-container px-4 py-1 rounded-full text-xs font-bold uppercase tracking-widest font-label">
               Category
@@ -139,7 +139,7 @@ export default async function SlugPage({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
         <Header categories={categories} />
-        <main className="pt-[120px] min-h-screen">
+        <main className="pt-[70px] md:pt-[120px] min-h-screen">
           {/* Post Hero */}
           <section className="relative w-full h-[600px] flex items-end px-8 md:px-24 pb-20 overflow-hidden">
             {post.image && (

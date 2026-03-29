@@ -21,7 +21,7 @@ export default async function Home() {
     <>
       <Header categories={categories} />
 
-      <main className="pt-[120px] min-h-screen">
+      <main className="pt-[70px] md:pt-[120px] min-h-screen">
         {/* Static Hero */}
         <section className="relative w-full h-[750px] flex items-end overflow-hidden">
           <img
