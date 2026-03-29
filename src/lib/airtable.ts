@@ -59,14 +59,16 @@ async function fetchRecords(formula?: string, sort?: string, maxRecords?: number
   let offset: string | undefined;
 
   do {
-    const params = new URLSearchParams();
-    if (formula) params.set("filterByFormula", formula);
-    if (sort) params.set("sort[0][field]", sort);
-    params.set("sort[0][direction]", "desc");
-    if (maxRecords && !offset) params.set("maxRecords", String(maxRecords));
-    if (offset) params.set("offset", offset);
+    const parts: string[] = [];
+    if (formula) parts.push(`filterByFormula=${encodeURIComponent(formula)}`);
+    if (sort) {
+      parts.push(`sort%5B0%5D%5Bfield%5D=${encodeURIComponent(sort)}`);
+      parts.push(`sort%5B0%5D%5Bdirection%5D=desc`);
+    }
+    if (maxRecords && !offset) parts.push(`maxRecords=${maxRecords}`);
+    if (offset) parts.push(`offset=${encodeURIComponent(offset)}`);
 
-    const url = `${AIRTABLE_API}?${params.toString()}`;
+    const url = `${AIRTABLE_API}?${parts.join("&")}`;
     const res = await fetch(url, {
       headers: { Authorization: `Bearer ${getToken()}` },
       next: { revalidate: 300 },
