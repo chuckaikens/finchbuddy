@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Plus_Jakarta_Sans, Be_Vietnam_Pro } from "next/font/google";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import "./globals.css";
 
 const plusJakarta = Plus_Jakarta_Sans({
@@ -100,6 +101,7 @@ export default function RootLayout({
       <body className="bg-surface font-body text-on-surface selection:bg-primary-container selection:text-on-primary-container">
         {children}
       </body>
+      <GoogleAnalytics gaId="G-30Q6LZ2TV1" />
     </html>
   );
 }

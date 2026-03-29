@@ -3,9 +3,9 @@ import { Category } from "@/lib/airtable";
 
 export default function Header({ categories }: { categories: Category[] }) {
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 glass-header">
-      {/* Logo Row */}
-      <div className="flex justify-center py-4 max-w-screen-2xl mx-auto px-8">
+    <header className="fixed top-0 left-0 right-0 z-50">
+      {/* Logo Row — solid white */}
+      <div className="bg-white flex justify-center py-4 max-w-screen-2xl mx-auto px-8 w-full">
         <Link href="/">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src="/logo.png" alt="FinchBuddy" className="h-14 w-auto" />
