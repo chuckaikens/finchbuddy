@@ -1,22 +1,22 @@
 import type { Metadata } from "next";
-import { Epilogue, Manrope } from "next/font/google";
+import { Plus_Jakarta_Sans, Be_Vietnam_Pro } from "next/font/google";
 import "./globals.css";
 
-const epilogue = Epilogue({
-  variable: "--font-epilogue",
+const plusJakarta = Plus_Jakarta_Sans({
+  variable: "--font-plus-jakarta",
   subsets: ["latin"],
-  weight: ["400", "700", "800", "900"],
+  weight: ["400", "500", "600", "700", "800"],
 });
 
-const manrope = Manrope({
-  variable: "--font-manrope",
+const beVietnam = Be_Vietnam_Pro({
+  variable: "--font-be-vietnam",
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {
-  title: "FinchBuddy — The Radiant Soul of the Zebra Finch",
-  description: "Organic Precision in Ornithology",
+  title: "FinchBuddy — Where Feathers and Friends Meet",
+  description: "Your comprehensive guide to finch care, species, breeding, and habitat.",
 };
 
 export default function RootLayout({
@@ -25,7 +25,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`light ${epilogue.variable} ${manrope.variable}`}>
+    <html lang="en" className={`light ${plusJakarta.variable} ${beVietnam.variable}`}>
       <head>
         <link
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"

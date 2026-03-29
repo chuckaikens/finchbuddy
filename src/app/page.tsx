@@ -7,70 +7,42 @@ import PostCard from "@/components/PostCard";
 import {
   getPosts,
   getCategories,
-  getFeaturedImageUrl,
-  getFeaturedImageAlt,
-  getAuthorName,
-  getCategoryNames,
-  formatDate,
-  estimateReadTime,
-  stripHtml,
 } from "@/lib/wordpress";
 
 export default async function Home() {
   const [posts, categories] = await Promise.all([
-    getPosts({ perPage: 13 }),
+    getPosts({ perPage: 10 }),
     getCategories(),
   ]);
 
-  const featuredPost = posts[0];
-  const gridPosts = posts.slice(1, 7);
-  const recentSidebar = posts.slice(7, 10);
-
-  const featuredImage = getFeaturedImageUrl(featuredPost);
-  const featuredCats = getCategoryNames(featuredPost);
-  const featuredReadTime = estimateReadTime(featuredPost.content.rendered);
+  const gridPosts = posts.slice(0, 6);
+  const recentSidebar = posts.slice(6, 9);
 
   return (
     <>
       <Header categories={categories} />
 
       <main className="pt-24 min-h-screen">
-        {/* Hero — Featured Post */}
-        <Link href={`/${featuredPost.slug}`} className="block">
-          <section className="relative w-full h-[716px] flex items-end px-8 md:px-24 pb-20 overflow-hidden group">
-            {featuredImage && (
-              <img
-                className="absolute inset-0 w-full h-full object-cover z-0 grayscale-[20%] brightness-90 group-hover:scale-[1.02] transition-transform duration-700"
-                alt={getFeaturedImageAlt(featuredPost)}
-                src={featuredImage}
-              />
-            )}
-            <div className="absolute inset-0 bg-gradient-to-t from-surface via-surface/40 to-transparent z-10"></div>
-            <div className="relative z-20 max-w-4xl">
-              <div className="flex gap-2 mb-6">
-                {featuredCats.map((cat) => (
-                  <span key={cat.slug} className="bg-primary-container text-on-primary-container px-4 py-1 rounded-full text-xs font-bold uppercase tracking-widest font-label">
-                    {cat.name}
-                  </span>
-                ))}
-                <span className="bg-secondary-container text-on-secondary-container px-4 py-1 rounded-full text-xs font-bold uppercase tracking-widest font-label">
-                  {featuredReadTime} min read
-                </span>
-              </div>
-              <h1
-                className="font-headline text-5xl md:text-7xl font-black tracking-tighter leading-none text-on-surface mb-6"
-                dangerouslySetInnerHTML={{ __html: featuredPost.title.rendered }}
-              />
-              <p className="text-on-surface/80 text-lg max-w-2xl mb-6 leading-relaxed">
-                {stripHtml(featuredPost.excerpt.rendered)}
-              </p>
-              <div className="flex items-center gap-4 font-label">
-                <p className="font-bold text-on-surface">{getAuthorName(featuredPost)}</p>
-                <p className="text-sm opacity-70">{formatDate(featuredPost.date)}</p>
-              </div>
-            </div>
-          </section>
-        </Link>
+        {/* Static Hero */}
+        <section className="relative w-full h-[716px] flex items-end px-8 md:px-24 pb-20 overflow-hidden">
+          <img
+            className="absolute inset-0 w-full h-full object-cover z-0 brightness-90"
+            alt="A vibrant zebra finch perched on a branch"
+            src="https://i.pinimg.com/1200x/87/28/ed/8728ed33fe57574969b8726fb1eb84e7.jpg"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-surface via-surface/50 to-transparent z-10"></div>
+          <div className="relative z-20 max-w-4xl">
+            <span className="bg-primary-container text-on-primary-container px-4 py-1 rounded-full text-xs font-bold uppercase tracking-widest font-label mb-6 inline-block">
+              Where Feathers and Friends Meet
+            </span>
+            <h1 className="font-headline text-5xl md:text-7xl font-extrabold tracking-[-0.02em] leading-none text-on-surface mb-6">
+              Your Complete Guide to Finch Care
+            </h1>
+            <p className="text-on-surface/80 text-lg md:text-xl max-w-2xl leading-relaxed">
+              Species profiles, care guides, breeding tips, and habitat design from passionate finch keepers.
+            </p>
+          </div>
+        </section>
 
         {/* Category Pills */}
         <div className="max-w-screen-2xl mx-auto px-8 md:px-12 mt-16">
@@ -92,7 +64,7 @@ export default async function Home() {
         <div className="max-w-screen-2xl mx-auto px-8 md:px-12 mt-16 grid grid-cols-1 lg:grid-cols-12 gap-24">
           {/* Main — Post Grid */}
           <div className="lg:col-span-8">
-            <h2 className="font-headline text-3xl font-extrabold tracking-tight text-on-surface mb-12">Latest Articles</h2>
+            <h2 className="font-headline text-3xl font-extrabold tracking-[-0.02em] text-on-surface mb-12">Latest Articles</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
               {gridPosts.map((post) => (
                 <PostCard key={post.id} post={post} />
