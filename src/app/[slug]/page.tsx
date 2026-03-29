@@ -14,7 +14,6 @@ import {
   formatDate,
   estimateReadTime,
 } from "@/lib/airtable";
-import { getPageBySlug } from "@/lib/wordpress";
 
 const SITE_URL = "https://finchbuddy.com";
 
@@ -131,21 +130,7 @@ export default async function SlugPage({
       mainEntityOfPage: { "@type": "WebPage", "@id": `${SITE_URL}/${slug}` },
     };
 
-    // If we have content in Airtable, use it. Otherwise fall back to WP.
-    let content = post.content;
-    if (!content) {
-      // Fallback: fetch from WordPress API
-      const wpRes = await fetch(
-        `https://finchbuddy.com/wp-json/wp/v2/posts?slug=${slug}&_embed`,
-        { next: { revalidate: 300 } }
-      );
-      if (wpRes.ok) {
-        const wpPosts = await wpRes.json();
-        if (wpPosts.length > 0) {
-          content = wpPosts[0].content.rendered;
-        }
-      }
-    }
+    const content = post.content;
 
     return (
       <>
@@ -202,32 +187,6 @@ export default async function SlugPage({
               />
             </article>
             <Sidebar categories={categories} recentPosts={recentPosts} />
-          </div>
-        </main>
-        <Footer categories={categories} />
-      </>
-    );
-  }
-
-  // 3. Check if this slug is a static page (still from WordPress)
-  const page = await getPageBySlug(slug);
-  if (page) {
-    return (
-      <>
-        <Header categories={categories} />
-        <main className="pt-[120px] min-h-screen">
-          <div className="max-w-screen-2xl mx-auto px-8 md:px-24 mt-16">
-            <h1
-              className="font-headline text-5xl font-black tracking-tighter leading-none text-on-surface mb-12"
-              dangerouslySetInnerHTML={{ __html: page.title.rendered }}
-            />
-            <div
-              className="prose prose-lg max-w-3xl text-on-surface/90 leading-relaxed font-body
-                [&_h2]:font-headline [&_h2]:text-3xl [&_h2]:font-extrabold [&_h2]:tracking-tight [&_h2]:text-on-surface [&_h2]:mt-12 [&_h2]:mb-6
-                [&_p]:mb-6
-                [&_a]:text-primary [&_a]:font-bold [&_a]:hover:underline"
-              dangerouslySetInnerHTML={{ __html: page.content.rendered }}
-            />
           </div>
         </main>
         <Footer categories={categories} />
