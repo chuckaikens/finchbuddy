@@ -37,7 +37,7 @@ export default async function SlugPage({
     return (
       <>
         <Header categories={categories} />
-        <main className="pt-24 min-h-screen">
+        <main className="pt-[120px] min-h-screen">
           {/* Category Hero */}
           <section className="max-w-screen-2xl mx-auto px-8 md:px-24 pt-16 pb-8">
             <span className="bg-primary-container text-on-primary-container px-4 py-1 rounded-full text-xs font-bold uppercase tracking-widest font-label">
@@ -63,7 +63,7 @@ export default async function SlugPage({
             <Sidebar categories={categories} recentPosts={recentPosts} />
           </div>
         </main>
-        <Footer />
+        <Footer categories={categories} />
       </>
     );
   }
@@ -81,7 +81,7 @@ export default async function SlugPage({
     return (
       <>
         <Header categories={categories} />
-        <main className="pt-24 min-h-screen">
+        <main className="pt-[120px] min-h-screen">
           {/* Post Hero */}
           <section className="relative w-full h-[600px] flex items-end px-8 md:px-24 pb-20 overflow-hidden">
             {featuredImage && (
@@ -144,7 +144,7 @@ export default async function SlugPage({
             <Sidebar categories={categories} recentPosts={recentPosts} />
           </div>
         </main>
-        <Footer />
+        <Footer categories={categories} />
       </>
     );
   }
@@ -155,7 +155,7 @@ export default async function SlugPage({
     return (
       <>
         <Header categories={categories} />
-        <main className="pt-24 min-h-screen">
+        <main className="pt-[120px] min-h-screen">
           <div className="max-w-screen-2xl mx-auto px-8 md:px-24 mt-16">
             <h1
               className="font-headline text-5xl font-black tracking-tighter leading-none text-on-surface mb-12"
@@ -170,7 +170,7 @@ export default async function SlugPage({
             />
           </div>
         </main>
-        <Footer />
+        <Footer categories={categories} />
       </>
     );
   }

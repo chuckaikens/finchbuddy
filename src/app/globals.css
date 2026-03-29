@@ -1,29 +1,29 @@
 @import "tailwindcss";
 
 @theme inline {
-  /* === Primary: Terracotta (#974400) === */
-  --color-primary: #974400;
+  /* === Primary: Vivid Finch Orange (#E86A10) === */
+  --color-primary: #E86A10;
   --color-on-primary: #ffffff;
-  --color-primary-container: #ffdbca;
-  --color-on-primary-container: #331500;
+  --color-primary-container: #FF8C3A;
+  --color-on-primary-container: #2e1400;
   --color-primary-fixed: #ffdbca;
   --color-primary-fixed-dim: #ffb68a;
-  --color-on-primary-fixed: #331500;
-  --color-on-primary-fixed-variant: #743300;
+  --color-on-primary-fixed: #2e1400;
+  --color-on-primary-fixed-variant: #b34d00;
   --color-inverse-primary: #ffb68a;
 
-  /* === Secondary: Forest Sage (#3f6751) === */
-  --color-secondary: #3f6751;
+  /* === Secondary: Deep Forest Sage (#2D5A3F) === */
+  --color-secondary: #2D5A3F;
   --color-on-secondary: #ffffff;
-  --color-secondary-container: #c1e9ce;
-  --color-on-secondary-container: #002110;
-  --color-secondary-fixed: #c1e9ce;
-  --color-secondary-fixed-dim: #a6cdb3;
+  --color-secondary-container: #3f6751;
+  --color-on-secondary-container: #ffffff;
+  --color-secondary-fixed: #b0e8c4;
+  --color-secondary-fixed-dim: #8dcca8;
   --color-on-secondary-fixed: #002110;
-  --color-on-secondary-fixed-variant: #27503b;
+  --color-on-secondary-fixed-variant: #1a4a30;
 
-  /* === Tertiary: Beak Red (#ac2d00) === */
-  --color-tertiary: #ac2d00;
+  /* === Tertiary: Beak Red (#C43E1C) === */
+  --color-tertiary: #C43E1C;
   --color-on-tertiary: #ffffff;
   --color-tertiary-container: #ffdbc9;
   --color-on-tertiary-container: #3a0a00;
@@ -31,6 +31,11 @@
   --color-tertiary-fixed-dim: #ffb694;
   --color-on-tertiary-fixed: #3a0a00;
   --color-on-tertiary-fixed-variant: #872200;
+
+  /* === Dark Charcoal (Finch Breast Bar) === */
+  --color-finch-dark: #1C1C1E;
+  --color-finch-charcoal: #2A2A2E;
+  --color-finch-warm-black: #1E1916;
 
   /* === Surfaces: Warm Eggshell === */
   --color-surface: #fbf9f8;
@@ -42,7 +47,7 @@
   --color-surface-container-high: #e9e6e3;
   --color-surface-container-highest: #e3e1de;
   --color-surface-variant: #e8dfd4;
-  --color-surface-tint: #974400;
+  --color-surface-tint: #E86A10;
   --color-background: #fbf9f8;
 
   /* === On-Surface & Outline === */
@@ -53,8 +58,8 @@
   --color-outline-variant: #d7c7b8;
 
   /* === Inverse === */
-  --color-inverse-surface: #313030;
-  --color-inverse-on-surface: #f3f0ed;
+  --color-inverse-surface: #1E1916;
+  --color-inverse-on-surface: #f5f0ec;
 
   /* === Error === */
   --color-error: #ba1a1a;
@@ -72,13 +77,20 @@
   font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
 }
 
-/* Design system: ambient shadows — tinted charcoal, 5% opacity, 50px blur */
+/* Design system: ambient shadows */
 .editorial-shadow {
   box-shadow: 0 20px 50px -8px rgba(27, 28, 28, 0.05);
 }
 
-/* Design system: glassmorphism for floating nav */
+/* Glass header */
 .glass-header {
-  background: rgba(251, 249, 248, 0.8);
+  background: rgba(251, 249, 248, 0.95);
   backdrop-filter: blur(20px);
+}
+
+/* WordPress content image handling */
+.wp-content img {
+  border-radius: 0.75rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
 }
