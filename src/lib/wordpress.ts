@@ -4,6 +4,7 @@ export interface WPPost {
   id: number;
   slug: string;
   date: string;
+  modified: string;
   title: { rendered: string };
   content: { rendered: string };
   excerpt: { rendered: string };

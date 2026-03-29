@@ -1,4 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import Header from "@/components/Header";
@@ -18,7 +19,81 @@ import {
   getCategoryNames,
   formatDate,
   estimateReadTime,
+  stripHtml,
 } from "@/lib/wordpress";
+
+const SITE_URL = "https://finchbuddy.com";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+
+  // Check category
+  const category = await getCategoryBySlug(slug);
+  if (category) {
+    const title = `${category.name} — Finch ${category.name} Articles`;
+    const description = `Browse ${category.count} articles about finch ${category.name.toLowerCase()}. Expert guides and tips from FinchBuddy.`;
+    return {
+      title,
+      description,
+      openGraph: {
+        title,
+        description,
+        url: `${SITE_URL}/${slug}`,
+        type: "website",
+      },
+      twitter: { card: "summary", title, description },
+      alternates: { canonical: `${SITE_URL}/${slug}` },
+    };
+  }
+
+  // Check post
+  const post = await getPostBySlug(slug);
+  if (post) {
+    const title = stripHtml(post.title.rendered);
+    const description = stripHtml(post.excerpt.rendered).slice(0, 160);
+    const image = getFeaturedImageUrl(post);
+    const author = getAuthorName(post);
+
+    return {
+      title,
+      description,
+      openGraph: {
+        title,
+        description,
+        url: `${SITE_URL}/${slug}`,
+        type: "article",
+        publishedTime: post.date,
+        modifiedTime: post.modified,
+        authors: [author],
+        ...(image ? { images: [{ url: image, alt: title }] } : {}),
+      },
+      twitter: {
+        card: "summary_large_image",
+        title,
+        description,
+        ...(image ? { images: [image] } : {}),
+      },
+      alternates: { canonical: `${SITE_URL}/${slug}` },
+    };
+  }
+
+  // Check page
+  const page = await getPageBySlug(slug);
+  if (page) {
+    const title = stripHtml(page.title.rendered);
+    return {
+      title,
+      openGraph: { title, url: `${SITE_URL}/${slug}`, type: "website" },
+      alternates: { canonical: `${SITE_URL}/${slug}` },
+    };
+  }
+
+  return {};
+}
 
 export default async function SlugPage({
   params,
@@ -78,8 +153,29 @@ export default async function SlugPage({
     const readTime = estimateReadTime(post.content.rendered);
     const recentPosts = await getPosts({ perPage: 3 });
 
+    const jsonLd = {
+      "@context": "https://schema.org",
+      "@type": "Article",
+      headline: stripHtml(post.title.rendered),
+      description: stripHtml(post.excerpt.rendered).slice(0, 160),
+      image: featuredImage ?? undefined,
+      datePublished: post.date,
+      dateModified: post.modified,
+      author: { "@type": "Person", name: authorName },
+      publisher: {
+        "@type": "Organization",
+        name: "FinchBuddy",
+        logo: { "@type": "ImageObject", url: `${SITE_URL}/logo.png` },
+      },
+      mainEntityOfPage: { "@type": "WebPage", "@id": `${SITE_URL}/${slug}` },
+    };
+
     return (
       <>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
         <Header categories={categories} />
         <main className="pt-[120px] min-h-screen">
           {/* Post Hero */}
