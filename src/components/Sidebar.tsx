@@ -1,12 +1,12 @@
 import Link from "next/link";
-import { WPCategory, WPPost, getFeaturedImageUrl, formatDate } from "@/lib/wordpress";
+import { Category, Post, formatDate } from "@/lib/airtable";
 
 export default function Sidebar({
   categories,
   recentPosts,
 }: {
-  categories: WPCategory[];
-  recentPosts: WPPost[];
+  categories: Category[];
+  recentPosts: Post[];
 }) {
   return (
     <aside className="lg:col-span-4 space-y-16">
@@ -35,7 +35,7 @@ export default function Sidebar({
         <div className="flex flex-wrap gap-2">
           {categories.map((cat) => (
             <Link
-              key={cat.id}
+              key={cat.slug}
               href={`/${cat.slug}`}
               className="px-4 py-2 bg-surface-container text-on-surface rounded-full text-xs font-bold hover:bg-surface-container-highest transition-colors"
             >
@@ -48,28 +48,24 @@ export default function Sidebar({
       {/* Recent Posts */}
       <div className="space-y-8">
         <h3 className="font-headline text-xl font-bold uppercase tracking-widest text-primary">Recent Posts</h3>
-        {recentPosts.map((post) => {
-          const image = getFeaturedImageUrl(post);
-          return (
-            <Link key={post.id} href={`/${post.slug}`} className="group cursor-pointer block">
-              {image && (
-                <div className="aspect-video bg-surface-container rounded-xl overflow-hidden mb-4">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    alt={post.title.rendered}
-                    src={image}
-                  />
-                </div>
-              )}
-              <span className="text-xs text-on-surface/50 font-label">{formatDate(post.date)}</span>
-              <h4
-                className="font-headline text-lg font-bold mt-1 group-hover:text-primary transition-colors"
-                dangerouslySetInnerHTML={{ __html: post.title.rendered }}
-              />
-            </Link>
-          );
-        })}
+        {recentPosts.map((post) => (
+          <Link key={post.id} href={`/${post.slug}`} className="group cursor-pointer block">
+            {post.image && (
+              <div className="aspect-video bg-surface-container rounded-xl overflow-hidden mb-4">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  alt={post.title}
+                  src={post.image}
+                />
+              </div>
+            )}
+            <span className="text-xs text-on-surface/50 font-label">{formatDate(post.date)}</span>
+            <h4 className="font-headline text-lg font-bold mt-1 group-hover:text-primary transition-colors">
+              {post.title}
+            </h4>
+          </Link>
+        ))}
       </div>
     </aside>
   );

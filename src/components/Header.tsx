@@ -1,7 +1,7 @@
 import Link from "next/link";
-import { WPCategory } from "@/lib/wordpress";
+import { Category } from "@/lib/airtable";
 
-export default function Header({ categories }: { categories: WPCategory[] }) {
+export default function Header({ categories }: { categories: Category[] }) {
   return (
     <header className="fixed top-0 left-0 right-0 z-50 glass-header">
       {/* Logo Row */}
@@ -19,7 +19,7 @@ export default function Header({ categories }: { categories: WPCategory[] }) {
           </Link>
           {categories.map((cat) => (
             <Link
-              key={cat.id}
+              key={cat.slug}
               className="text-white/80 hover:text-primary transition-colors capitalize"
               href={`/${cat.slug}`}
             >

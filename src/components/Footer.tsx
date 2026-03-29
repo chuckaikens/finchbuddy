@@ -1,7 +1,7 @@
 import Link from "next/link";
-import { WPCategory } from "@/lib/wordpress";
+import { Category } from "@/lib/airtable";
 
-export default function Footer({ categories }: { categories: WPCategory[] }) {
+export default function Footer({ categories }: { categories: Category[] }) {
   return (
     <footer>
       {/* Accent bar */}
@@ -26,7 +26,7 @@ export default function Footer({ categories }: { categories: WPCategory[] }) {
               <div className="flex flex-col gap-3">
                 {categories.map((cat) => (
                   <Link
-                    key={cat.id}
+                    key={cat.slug}
                     href={`/${cat.slug}`}
                     className="text-white/60 hover:text-primary transition-colors capitalize"
                   >

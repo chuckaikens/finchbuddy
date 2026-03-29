@@ -1,12 +1,12 @@
 import type { MetadataRoute } from "next";
-import { getPosts, getCategories, getPages } from "@/lib/wordpress";
+import { getPosts, getCategories } from "@/lib/airtable";
+import { getPages } from "@/lib/wordpress";
 
 const SITE_URL = "https://finchbuddy.com";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  // Fetch all content from WordPress
   const [posts, categories, pages] = await Promise.all([
-    getAllPosts(),
+    getPosts(),
     getCategories(),
     getPages(),
   ]);
@@ -22,7 +22,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const postRoutes: MetadataRoute.Sitemap = posts.map((post) => ({
     url: `${SITE_URL}/${post.slug}`,
-    lastModified: new Date(post.modified || post.date),
+    lastModified: post.date ? new Date(post.date) : new Date(),
     changeFrequency: "weekly" as const,
     priority: 0.8,
   }));
@@ -42,17 +42,4 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }));
 
   return [...staticRoutes, ...categoryRoutes, ...postRoutes, ...pageRoutes];
-}
-
-// Helper to fetch all posts (paginated)
-async function getAllPosts() {
-  const allPosts = [];
-  let page = 1;
-  while (true) {
-    const posts = await getPosts({ perPage: 100, page });
-    allPosts.push(...posts);
-    if (posts.length < 100) break;
-    page++;
-  }
-  return allPosts;
 }

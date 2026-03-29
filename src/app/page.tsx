@@ -6,11 +6,11 @@ import PostCard from "@/components/PostCard";
 import {
   getPosts,
   getCategories,
-} from "@/lib/wordpress";
+} from "@/lib/airtable";
 
 export default async function Home() {
   const [posts, categories] = await Promise.all([
-    getPosts({ perPage: 12 }),
+    getPosts(12),
     getCategories(),
   ]);
 
@@ -22,7 +22,7 @@ export default async function Home() {
       <Header categories={categories} />
 
       <main className="pt-[120px] min-h-screen">
-        {/* Hero — Static, gradient pushed way down */}
+        {/* Static Hero */}
         <section className="relative w-full h-[750px] flex items-end overflow-hidden">
           <img
             className="absolute inset-0 w-full h-full object-cover z-0"
@@ -49,7 +49,7 @@ export default async function Home() {
           <div className="max-w-screen-2xl mx-auto px-8 md:px-12 py-6 flex flex-wrap justify-center gap-4">
             {categories.map((cat) => (
               <Link
-                key={cat.id}
+                key={cat.slug}
                 href={`/${cat.slug}`}
                 className="px-6 py-2 bg-white/10 text-white rounded-full text-sm font-bold font-label hover:bg-primary hover:text-on-primary transition-colors uppercase tracking-wider"
               >
